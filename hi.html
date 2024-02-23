@@ -2,8 +2,6 @@
 <html>
 <head>
 <meta charset="utf-8">
-  <!-- Include Handsfree.js -->
-  <link rel="stylesheet" href="https://unpkg.com/handsfree@8.5.1/build/lib/assets/handsfree.css" />
 <title>Home | Schoology</title>
  <link rel="shortcut icon" href="https://asset-cdn.schoology.com/sites/all/themes/schoology_theme/favicon.ico" type="image/x-icon">
 <link rel="shortcut icon" href="/sites/all/themes/schoology_theme/favicon.ico" type="image/x-icon" />
@@ -29,22 +27,22 @@
 	</video>
 </div>
   <script>
-    const handsfree = new Handsfree({hands: true})
-    handsfree.enablePlugins('browser')
-    handsfree.start()
-  </script>
-<script>
-    var video = document.querySelector("#videoElement");
+const handsfree = new Handsfree({
+  hands: {
+    enabled: true,
+    // The maximum number of hands to detect [0 - 4]
+    maxNumHands: 2,
 
-    if (navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia({ video: true })
-        .then(function (stream) {
-            video.srcObject = stream;
-        })
-    .catch(function (err0r) {
-      console.log("Something went wrong!");
-    });
-    }
+    // Minimum confidence [0 - 1] for a hand to be considered detected
+    minDetectionConfidence: 0.5,
+
+    // Minimum confidence [0 - 1] for the landmark tracker to be considered detected
+    // Higher values are more robust at the expense of higher latency
+    minTrackingConfidence: 0.5
+  }
+})
+
+handsfree.start()
 </script>
 </body>
 </html>
